@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -30,10 +31,6 @@ public class Account {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNumber() {
         return number;
     }
@@ -58,6 +55,15 @@ public class Account {
         this.balance = balance;
     }
 
+    @JsonIgnore
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -65,6 +71,7 @@ public class Account {
                 ", number='" + number + '\'' +
                 ", creationDate=" + creationDate +
                 ", balance=" + balance +
+                ", client=" + client +
                 '}';
     }
 }
