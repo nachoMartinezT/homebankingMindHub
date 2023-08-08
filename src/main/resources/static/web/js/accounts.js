@@ -19,7 +19,7 @@ Vue.createApp({
                     this.errorToats.show();
                 })
         },
-        formatDate(date) {
+        formatDate(creationDate) {
             return new Date(creationDate).toLocaleDateString('en-us');
         },
     },

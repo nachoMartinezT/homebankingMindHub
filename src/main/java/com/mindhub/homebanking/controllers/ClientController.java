@@ -35,6 +35,7 @@ public class ClientController {
     @RequestMapping("/clients/{id}")
     public ClientDto getClientById(@PathVariable Long id){
         Client foundClient = clientRepository.findById(id).orElse(null);
+        //ClientDto clientDto = new ClientDto(foundClient);
         ClientDto clientDto = null;
         if (foundClient != null){
             clientDto = objectMapper.convertValue(foundClient, ClientDto.class);
