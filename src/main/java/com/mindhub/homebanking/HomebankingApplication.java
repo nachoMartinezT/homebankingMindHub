@@ -31,11 +31,20 @@ public class HomebankingApplication {
 			Account account1 = new Account("VIN001", LocalDate.now(), 5000);
 			Account account2 = new Account("VIN002", LocalDate.now().plusDays(1),7500);
 
+			Account account3 = new Account(LocalDate.now(),12000);
+			Account account4 = new Account(LocalDate.now(),13500);
+			client2.addAccount(account3);
+			client3.addAccount(account4);
+			accountRepository.save(account3);
+			accountRepository.save(account4);
+
 			client1.addAccount(account1);
 			client1.addAccount(account2);
 
 			accountRepository.save(account1);
 			accountRepository.save(account2);
+
+
 
 
 		};

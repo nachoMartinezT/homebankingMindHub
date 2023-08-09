@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Account {
@@ -18,9 +20,16 @@ public class Account {
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Transaction> transactions = new ArrayList<>();
+
     public Account() {
     }
 
+    public Account(LocalDate creationDate, double balance){
+        this.creationDate = creationDate;
+        this.balance = balance;
+    }
     public Account(String number, LocalDate creationDate, double balance) {
         this.number = number;
         this.creationDate = creationDate;
