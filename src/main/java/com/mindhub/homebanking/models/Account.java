@@ -20,7 +20,7 @@ public class Account {
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
     private List<Transaction> transactions = new ArrayList<>();
 
     public Account() {
@@ -73,6 +73,19 @@ public class Account {
         this.client = client;
     }
 
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
+    public void addTransaction(Transaction transaction){
+        transaction.setAccount(this);
+        this.transactions.add(transaction);
+    }
+
     @Override
     public String toString() {
         return "Account{" +
@@ -81,6 +94,7 @@ public class Account {
                 ", creationDate=" + creationDate +
                 ", balance=" + balance +
                 ", client=" + client +
+                ", transactions=" + transactions +
                 '}';
     }
 }

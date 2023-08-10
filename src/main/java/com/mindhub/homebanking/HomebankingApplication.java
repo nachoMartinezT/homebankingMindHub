@@ -2,14 +2,18 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.Transaction;
+import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class HomebankingApplication {
@@ -19,7 +23,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
 		return (args) -> {
 			Client client3 = new Client("Nacho","Martinez","martineznacho@gmail.com");
 			Client client2 = new Client("Carla","Perez","carlaperez@hotmail.com");
@@ -35,14 +39,36 @@ public class HomebankingApplication {
 			Account account4 = new Account(LocalDate.now(),13500);
 			client2.addAccount(account3);
 			client3.addAccount(account4);
-			accountRepository.save(account3);
-			accountRepository.save(account4);
+
 
 			client1.addAccount(account1);
 			client1.addAccount(account2);
 
+
+
+			Transaction transaction = new Transaction(TransactionType.DEBIT,-2100,"Pago expensas", LocalDateTime.now());
+			Transaction transaction2 = new Transaction(TransactionType.DEBIT, -1500, "Pago EDEA", LocalDateTime.of(2023,8,5,19,25,31));
+			Transaction transaction3 = new Transaction(TransactionType.CREDIT, 5600, "Honorarios",LocalDateTime.now());
+
+
+			accountRepository.save(account3);
+			accountRepository.save(account4);
+
+
+			account3.addTransaction(transaction);
+			account3.addTransaction(transaction3);
+			account4.addTransaction(transaction2);
+
+
+
+			transactionRepository.save(transaction);
+			transactionRepository.save(transaction3);
+			transactionRepository.save(transaction2);
+
 			accountRepository.save(account1);
 			accountRepository.save(account2);
+
+
 
 
 

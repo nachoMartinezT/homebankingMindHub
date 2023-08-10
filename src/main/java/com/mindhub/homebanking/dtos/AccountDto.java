@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AccountDto {
@@ -27,6 +28,7 @@ public class AccountDto {
         this.number = account.getNumber();
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
+        this.transactionsDto =  convertSetToDtoSet(account.getTransactions());
     }
 
     public Long getId() {
@@ -43,5 +45,22 @@ public class AccountDto {
 
     public double getBalance() {
         return balance;
+    }
+
+    public List<TransactionDto> convertSetToDtoSet(List<Transaction> transactions){
+        return transactions.stream()
+                .map(TransactionDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String toString() {
+        return "AccountDto{" +
+                "id=" + id +
+                ", number='" + number + '\'' +
+                ", creationDate=" + creationDate +
+                ", balance=" + balance +
+                ", transactionsDto=" + transactionsDto +
+                '}';
     }
 }

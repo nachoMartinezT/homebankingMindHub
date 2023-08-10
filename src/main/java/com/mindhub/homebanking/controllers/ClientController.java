@@ -5,6 +5,7 @@ import com.mindhub.homebanking.dtos.ClientDto;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,11 +20,9 @@ public class ClientController {
 
     ClientRepository clientRepository;
 
-    private final ObjectMapper objectMapper;
     @Autowired
-    public ClientController(ClientRepository clientRepository,ObjectMapper objectMapper){
+    public ClientController(ClientRepository clientRepository){
         this.clientRepository = clientRepository;
-        this.objectMapper = objectMapper;
     }
 
     @RequestMapping("/clients")
@@ -35,14 +34,8 @@ public class ClientController {
     @RequestMapping("/clients/{id}")
     public ClientDto getClientById(@PathVariable Long id){
         Client foundClient = clientRepository.findById(id).orElse(null);
-        //ClientDto clientDto = new ClientDto(foundClient);
-        ClientDto clientDto = null;
-        if (foundClient != null){
-            clientDto = objectMapper.convertValue(foundClient, ClientDto.class);
-        } else {
-            System.out.println("Client not found");
-        }
-       return clientDto;
+        ClientDto clientDto = new ClientDto(foundClient);
+        return clientDto;
     }
 
 
