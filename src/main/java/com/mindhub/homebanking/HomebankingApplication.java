@@ -69,9 +69,9 @@ public class HomebankingApplication {
 			accountRepository.save(account2);
 
 
-			Loan hipotecario = new Loan("hipotecario",500000, new ArrayList<>(List.of(12D,24D,36D,48D,60D)));
-			Loan personal = new Loan("Personal",100000, List.of(6D,12D,24D));
-			Loan automotriz = new Loan("Automotriz", 300000, List.of(6D,12D,24D,36D));
+			Loan hipotecario = new Loan("hipotecario",500000, new ArrayList<>(List.of(12,24,36,48,60)));
+			Loan personal = new Loan("Personal",100000, List.of(6,12,24));
+			Loan automotriz = new Loan("Automotriz", 300000, List.of(6,12,24,36));
 
 			loanRepository.save(hipotecario);
 			loanRepository.save(personal);

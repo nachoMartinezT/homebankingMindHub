@@ -5,6 +5,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Entity
 public class Loan {
     @Id
@@ -56,7 +58,7 @@ public class Loan {
         this.payments = payments;
     }
 
-    public List<ClienLoan> getClientLoans(){
-        return clientLoans;
+    public List<Client> getClient(){
+        return clientLoans.stream().map(client -> client.getClient()).collect(Collectors.toList());
     }
 }
