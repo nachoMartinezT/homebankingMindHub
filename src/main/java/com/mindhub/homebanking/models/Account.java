@@ -20,7 +20,7 @@ public class Account {
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
 
-    @OneToMany(mappedBy = "account",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy ="account",fetch = FetchType.LAZY)
     private List<Transaction> transactions = new ArrayList<>();
 
     public Account() {

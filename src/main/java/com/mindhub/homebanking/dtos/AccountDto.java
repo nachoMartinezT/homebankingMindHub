@@ -28,7 +28,7 @@ public class AccountDto {
         this.number = account.getNumber();
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
-        this.transactionsDto =  convertSetToDtoSet(account.getTransactions());
+        this.transactionsDto =  convertListToDtoList(account.getTransactions());
     }
 
     public Long getId() {
@@ -47,7 +47,7 @@ public class AccountDto {
         return balance;
     }
 
-    public List<TransactionDto> convertSetToDtoSet(List<Transaction> transactions){
+    public List<TransactionDto> convertListToDtoList(List<Transaction> transactions){
         return transactions.stream()
                 .map(TransactionDto::new)
                 .collect(Collectors.toList());
