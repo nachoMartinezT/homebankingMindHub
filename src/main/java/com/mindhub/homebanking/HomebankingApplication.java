@@ -1,10 +1,8 @@
 package com.mindhub.homebanking;
 
+import com.mindhub.homebanking.dtos.TransactionDto;
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +21,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
 		return (args) -> {
 			Client client3 = new Client("Nacho","Martinez","martineznacho@gmail.com");
 			Client client2 = new Client("Carla","Perez","carlaperez@hotmail.com");
@@ -67,6 +65,8 @@ public class HomebankingApplication {
 
 			accountRepository.save(account1);
 			accountRepository.save(account2);
+			accountRepository.save(account3);
+			accountRepository.save(account4);
 
 
 			Loan hipotecario = new Loan("hipotecario",500000, new ArrayList<>(List.of(12,24,36,48,60)));
@@ -77,10 +77,17 @@ public class HomebankingApplication {
 			loanRepository.save(personal);
 			loanRepository.save(automotriz);
 
+			ClientLoan clientLoan = new ClientLoan(List.of(60),client1,hipotecario);
+			System.out.println(clientLoan.getPayments());
+			System.out.println(clientLoan.getClient().getFirstName());
+			client1.addClientLoan(clientLoan);
+			hipotecario.setClientLoans(clientLoan);
+			clientRepository.save(client1);
+			loanRepository.save(hipotecario);
+			clientLoanRepository.save(clientLoan);
 
-
-
-
+			TransactionDto transactionDto = new TransactionDto(transaction);
+			System.out.println(transactionDto);
 
 
 

@@ -4,6 +4,7 @@ package com.mindhub.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class Client {
     private Set<Account> accounts = new HashSet<>();
 
     @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
-    private List<ClienLoan> clientLoans;
+    private List<ClientLoan> clientLoans = new ArrayList<>();
 
     public Client() {
     }
@@ -74,6 +75,11 @@ public class Client {
 
     public List<Loan> getLoans(){
         return clientLoans.stream().map(loan -> loan.getLoan()).collect(Collectors.toList());
+    }
+
+    public void addClientLoan(ClientLoan clientLoan){
+        clientLoan.setClient(this);
+        this.clientLoans.add(clientLoan);
     }
 
     @Override

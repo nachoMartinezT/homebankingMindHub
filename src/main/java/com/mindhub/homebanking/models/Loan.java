@@ -18,8 +18,8 @@ public class Loan {
     @ElementCollection
     private List<Integer> payments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "loan")
-    private List<ClienLoan> clientLoans;
+    @OneToMany(mappedBy = "loan",fetch = FetchType.EAGER)
+    private List<ClientLoan> clientLoans = new ArrayList<>();
 
     public Loan() {
     }
@@ -60,5 +60,14 @@ public class Loan {
 
     public List<Client> getClient(){
         return clientLoans.stream().map(client -> client.getClient()).collect(Collectors.toList());
+    }
+
+    public List<ClientLoan> getClientLoans() {
+        return clientLoans;
+    }
+
+    public void setClientLoans(ClientLoan clientLoan) {
+        clientLoan.setLoan(this);
+        this.clientLoans.add(clientLoan);
     }
 }

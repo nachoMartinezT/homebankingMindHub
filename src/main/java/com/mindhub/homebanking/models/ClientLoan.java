@@ -7,22 +7,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class ClienLoan {
+public class ClientLoan {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
-    @ElementCollection
-    private List<Integer> payments = new ArrayList<>();
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
     @ManyToOne(fetch = FetchType.EAGER)
     private Loan loan;
 
-    public ClienLoan(){
+    @ElementCollection
+    private List<Integer> payments = new ArrayList<>();
+
+    public ClientLoan(){
     }
-    public ClienLoan(Long id, List<Integer> payments, Client client, Loan loan) {
-        this.id = id;
+    public ClientLoan(List<Integer> payments, Client client, Loan loan) {
         this.payments = payments;
         this.client = client;
         this.loan = loan;

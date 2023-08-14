@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-
+@CrossOrigin
 @RestController
 @RequestMapping("/api")
 public class AccountController {
