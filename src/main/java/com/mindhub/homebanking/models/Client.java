@@ -23,7 +23,7 @@ public class Client {
     private Set<Account> accounts = new HashSet<>();
 
     @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
-    private List<ClientLoan> clientLoans = new ArrayList<>();
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Client() {
     }
@@ -73,8 +73,12 @@ public class Client {
         this.accounts.add(account);
     }
 
-    public List<Loan> getLoans(){
-        return clientLoans.stream().map(loan -> loan.getLoan()).collect(Collectors.toList());
+    public Set<Loan> getLoans(){
+        return clientLoans.stream().map(loan -> loan.getLoan()).collect(Collectors.toSet());
+    }
+
+    public Set<ClientLoan> getClientLoans() {
+        return clientLoans;
     }
 
     public void addClientLoan(ClientLoan clientLoan){

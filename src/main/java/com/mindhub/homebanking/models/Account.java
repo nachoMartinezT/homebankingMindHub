@@ -6,7 +6,9 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Account {
@@ -21,7 +23,7 @@ public class Account {
     private Client client;
 
     @OneToMany(mappedBy ="account",fetch = FetchType.LAZY)
-    private List<Transaction> transactions = new ArrayList<>();
+    private Set<Transaction> transactions = new HashSet<>();
 
     public Account() {
     }
@@ -73,11 +75,11 @@ public class Account {
         this.client = client;
     }
 
-    public List<Transaction> getTransactions() {
+    public Set<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<Transaction> transactions) {
+    public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
     }
 

@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class ClientLoan {
@@ -19,14 +21,13 @@ public class ClientLoan {
     private Loan loan;
 
     @ElementCollection
-    private List<Integer> payments = new ArrayList<>();
+    private Set<Integer> payments = new HashSet<>();
 
     public ClientLoan(){
     }
-    public ClientLoan(List<Integer> payments, Client client, Loan loan) {
+    public ClientLoan(Set<Integer> payments) {
         this.payments = payments;
-        this.client = client;
-        this.loan = loan;
+
     }
 
     public Long getId() {
@@ -37,11 +38,11 @@ public class ClientLoan {
         this.id = id;
     }
 
-    public List<Integer> getPayments() {
+    public Set<Integer> getPayments() {
         return payments;
     }
 
-    public void setPayments(List<Integer> payments) {
+    public void setPayments(Set<Integer> payments) {
         this.payments = payments;
     }
 
@@ -60,4 +61,6 @@ public class ClientLoan {
     public void setLoan(Loan loan) {
         this.loan = loan;
     }
+
+
 }

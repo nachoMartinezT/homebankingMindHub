@@ -19,7 +19,7 @@ public class AccountDto {
     private LocalDate creationDate;
     private double balance;
 
-    private List<TransactionDto> transactionsDto = new ArrayList<>();
+    private Set<TransactionDto> transactions = new HashSet<>();
 
     public AccountDto() {}
 
@@ -28,7 +28,7 @@ public class AccountDto {
         this.number = account.getNumber();
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
-        this.transactionsDto =  convertListToDtoList(account.getTransactions());
+        this.transactions =  convertSetToDtoSet(account.getTransactions());
     }
 
     public Long getId() {
@@ -47,10 +47,14 @@ public class AccountDto {
         return balance;
     }
 
-    public List<TransactionDto> convertListToDtoList(List<Transaction> transactions){
+    public Set<TransactionDto> getTransactions() {
+        return transactions;
+    }
+
+    public Set<TransactionDto> convertSetToDtoSet(Set<Transaction> transactions){
         return transactions.stream()
                 .map(TransactionDto::new)
-                .collect(Collectors.toList());
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -60,7 +64,7 @@ public class AccountDto {
                 ", number='" + number + '\'' +
                 ", creationDate=" + creationDate +
                 ", balance=" + balance +
-                ", transactionsDto=" + transactionsDto +
+                ", transactionsDto=" + transactions +
                 '}';
     }
 }

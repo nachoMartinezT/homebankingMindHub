@@ -19,6 +19,8 @@ public class ClientDto {
 
     private Set<AccountDto> accounts = new HashSet<>();
 
+    private Set<ClientLoanDto> clientLoans = new HashSet<>();
+
     public ClientDto() {
 
     }
@@ -34,6 +36,10 @@ public class ClientDto {
         this.email = client.getEmail();
 
         this.accounts = convertSetToDtoSet(client.getAccounts());
+
+        this.clientLoans = client.getClientLoans().stream()
+                .map(ClientLoanDto::new)
+                .collect(Collectors.toSet());
     }
 
 
@@ -58,6 +64,10 @@ public class ClientDto {
 
     public Set<AccountDto> getAccounts(){
         return accounts;
+    }
+
+    public Set<ClientLoanDto> getClientLoans() {
+        return clientLoans;
     }
 
     public Set<AccountDto> convertSetToDtoSet(Set<Account> accounts){

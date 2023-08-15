@@ -4,7 +4,9 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
@@ -16,15 +18,15 @@ public class Loan {
     private String name;
     private double maxAmount;
     @ElementCollection
-    private List<Integer> payments = new ArrayList<>();
+    private Set<Integer> payments = new HashSet<>();
 
     @OneToMany(mappedBy = "loan",fetch = FetchType.EAGER)
-    private List<ClientLoan> clientLoans = new ArrayList<>();
+    private Set<ClientLoan> clientLoans = new HashSet<>();
 
     public Loan() {
     }
 
-    public Loan(String name, double maxAmount, List<Integer> payments) {
+    public Loan(String name, double maxAmount, Set<Integer> payments) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
@@ -50,19 +52,19 @@ public class Loan {
         this.maxAmount = maxAmount;
     }
 
-    public List<Integer> getPayments() {
+    public Set<Integer> getPayments() {
         return payments;
     }
 
-    public void setPayments(List<Integer> payments) {
+    public void setPayments(Set<Integer> payments) {
         this.payments = payments;
     }
 
-    public List<Client> getClient(){
-        return clientLoans.stream().map(client -> client.getClient()).collect(Collectors.toList());
+    public Set<Client> getClient(){
+        return clientLoans.stream().map(client -> client.getClient()).collect(Collectors.toSet());
     }
 
-    public List<ClientLoan> getClientLoans() {
+    public Set<ClientLoan> getClientLoans() {
         return clientLoans;
     }
 

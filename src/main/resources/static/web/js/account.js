@@ -1,9 +1,11 @@
-Vue.createApp({
+const { createApp } = Vue;
+
+createApp({
     data() {
         return {
             accountInfo: {},
             errorToats: null,
-            errorMsg: null
+            errorMsg: null,
         }
     },
     methods: {
@@ -14,7 +16,7 @@ Vue.createApp({
                 .then((response) => {
                     //get client ifo
                     this.accountInfo = response.data;
-                    this.accountInfo.transactions.sort((a, b) => b.id - a.id)
+                    this.accountInfo.transactions.sort((a, b) => parseInt(b.id - a.id))
                 })
                 .catch((error) => {
                     // handle error
@@ -22,8 +24,8 @@ Vue.createApp({
                     this.errorToats.show();
                 })
         },
-        formatDate(creationDate) {
-            return new Date(creationDate).toLocaleDateString('en-gb');
+        formatDate(dateOfTransaction) {
+            return new Date(dateOfTransaction).toLocaleDateString('en-gb');
         }
     },
     mounted() {
