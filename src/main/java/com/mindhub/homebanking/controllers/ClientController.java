@@ -20,13 +20,13 @@ public class ClientController {
     private ClientRepository clientRepository;
 
     @RequestMapping("/clients")
-    public List<ClientDto> getClients(){
+    public List<ClientDto> getClients() {
 
         return clientRepository.findAll().stream().map(ClientDto::new).collect(toList());
     }
 
     @RequestMapping("/clients/{id}")
-    public ClientDto getClientById(@PathVariable Long id){
+    public ClientDto getClientById(@PathVariable Long id) {
         Client foundClient = clientRepository.findById(id).orElse(null);
         ClientDto clientDto = new ClientDto(foundClient);
         return clientDto;

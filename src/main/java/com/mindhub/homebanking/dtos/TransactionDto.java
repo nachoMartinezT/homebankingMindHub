@@ -13,7 +13,6 @@ public class TransactionDto {
     private LocalDateTime dateOfTransaction;
 
 
-
     public TransactionDto() {
     }
 

@@ -9,8 +9,8 @@ import java.util.Set;
 @Entity
 public class ClientLoan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -21,8 +21,9 @@ public class ClientLoan {
     @ElementCollection
     private Set<Integer> payments = new HashSet<>();
 
-    public ClientLoan(){
+    public ClientLoan() {
     }
+
     public ClientLoan(Set<Integer> payments) {
         this.payments = payments;
 

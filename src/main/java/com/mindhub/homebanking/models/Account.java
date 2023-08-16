@@ -14,22 +14,23 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Client client;
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    private Set<Transaction> transactions = new HashSet<>();
     private String number;
     private LocalDate creationDate;
     private double balance;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Client client;
 
-    @OneToMany(mappedBy ="account",fetch = FetchType.LAZY)
-    private Set<Transaction> transactions = new HashSet<>();
 
     public Account() {
     }
 
-    public Account(LocalDate creationDate, double balance){
+    public Account(LocalDate creationDate, double balance) {
         this.creationDate = creationDate;
         this.balance = balance;
     }
+
     public Account(String number, LocalDate creationDate, double balance) {
         this.number = number;
         this.creationDate = creationDate;
@@ -81,7 +82,7 @@ public class Account {
         this.transactions = transactions;
     }
 
-    public void addTransaction(Transaction transaction){
+    public void addTransaction(Transaction transaction) {
         transaction.setAccount(this);
         this.transactions.add(transaction);
     }

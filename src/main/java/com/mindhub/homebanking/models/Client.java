@@ -14,13 +14,13 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Long id;
-    @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
 
-    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
 
-    @OneToMany(mappedBy = "client",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
     private String firstName;
     private String lastName;
@@ -69,7 +69,7 @@ public class Client {
         return accounts;
     }
 
-    public Set<Loan> getLoans(){
+    public Set<Loan> getLoans() {
         return clientLoans.stream().map(loan -> loan.getLoan()).collect(Collectors.toSet());
     }
 
@@ -93,17 +93,17 @@ public class Client {
         this.cards = cards;
     }
 
-    public void addAccount(Account account){
+    public void addAccount(Account account) {
         account.setClient(this);
         this.accounts.add(account);
     }
 
-    public void addClientLoan(ClientLoan clientLoan){
+    public void addClientLoan(ClientLoan clientLoan) {
         clientLoan.setClient(this);
         this.clientLoans.add(clientLoan);
     }
 
-    public void addCard(Card card){
+    public void addCard(Card card) {
 
         this.cards.add(card);
     }

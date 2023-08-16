@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api")
@@ -20,12 +21,12 @@ public class AccountController {
     private AccountRepository accountRepository;
 
     @RequestMapping("/accounts")
-        public List<AccountDto> getAccounts(){
+    public List<AccountDto> getAccounts() {
         return accountRepository.findAll().stream().map(AccountDto::new).collect(toList());
     }
 
     @RequestMapping("/accounts/{id}")
-    public AccountDto findAccountById(@PathVariable Long id){
+    public AccountDto findAccountById(@PathVariable Long id) {
         return new AccountDto(accountRepository.findById(id).orElse(null));
     }
 

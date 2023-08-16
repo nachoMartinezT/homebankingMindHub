@@ -12,7 +12,7 @@ public class ClientLoanDto {
     private double amount;
     private Set<Integer> payments = new HashSet<>();
 
-    public ClientLoanDto(ClientLoan clientLoan){
+    public ClientLoanDto(ClientLoan clientLoan) {
         this.id = clientLoan.getId();
         this.idLoan = clientLoan.getLoan().getId();
         this.name = clientLoan.getLoan().getName();

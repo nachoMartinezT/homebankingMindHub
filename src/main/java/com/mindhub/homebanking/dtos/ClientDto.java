@@ -87,4 +87,3 @@ public class ClientDto {
 
 }
 
-//account.getId(),account.getNumber(),account.getCreationDate(),account.getBalance()

@@ -19,14 +19,15 @@ public class AccountDto {
 
     private Set<TransactionDto> transactions = new HashSet<>();
 
-    public AccountDto() {}
+    public AccountDto() {
+    }
 
     public AccountDto(Account account) {
         this.id = account.getId();
         this.number = account.getNumber();
         this.creationDate = account.getCreationDate();
         this.balance = account.getBalance();
-        this.transactions =  convertSetToDtoSet(account.getTransactions());
+        this.transactions = convertSetToDtoSet(account.getTransactions());
     }
 
     public Long getId() {
@@ -49,7 +50,7 @@ public class AccountDto {
         return transactions;
     }
 
-    public Set<TransactionDto> convertSetToDtoSet(Set<Transaction> transactions){
+    public Set<TransactionDto> convertSetToDtoSet(Set<Transaction> transactions) {
         return transactions.stream()
                 .map(TransactionDto::new)
                 .collect(Collectors.toSet());

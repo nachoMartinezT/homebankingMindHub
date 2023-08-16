@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 @Entity
 public class Loan {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ElementCollection
     private Set<Integer> payments = new HashSet<>();
-    @OneToMany(mappedBy = "loan",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
     private String name;
     private double maxAmount;
@@ -58,7 +58,7 @@ public class Loan {
         this.payments = payments;
     }
 
-    public Set<Client> getClient(){
+    public Set<Client> getClient() {
         return clientLoans.stream().map(client -> client.getClient()).collect(Collectors.toSet());
     }
 

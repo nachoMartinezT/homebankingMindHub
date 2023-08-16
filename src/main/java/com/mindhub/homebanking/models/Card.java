@@ -8,8 +8,8 @@ import java.time.LocalDate;
 @Entity
 public class Card {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;

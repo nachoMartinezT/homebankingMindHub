@@ -10,7 +10,7 @@ public class LoanDto {
     private double maxAmount;
     private Set<Integer> payments;
 
-    public LoanDto(Loan loan){
+    public LoanDto(Loan loan) {
         this.id = loan.getId();
         this.name = loan.getName();
         this.maxAmount = loan.getMaxAmount();

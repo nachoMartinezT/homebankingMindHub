@@ -15,19 +15,17 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class TransactionController {
 
-    TransactionRepository transactionRepository;
     @Autowired
-    public TransactionController(TransactionRepository transactionRepository){
-        this.transactionRepository = transactionRepository;
-    }
+    TransactionRepository transactionRepository;
+
 
     @RequestMapping("/transactions")
-    public List<TransactionDto> getAccounts(){
+    public List<TransactionDto> getAccounts() {
         return transactionRepository.findAll().stream().map(TransactionDto::new).collect(toList());
     }
 
     @RequestMapping("/transactions/{id}")
-    public TransactionDto findTransactionById(@PathVariable Long id){
+    public TransactionDto findTransactionById(@PathVariable Long id) {
         return new TransactionDto(transactionRepository.findById(id).orElse(null));
     }
 }
