@@ -1,7 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.AccountDto;
-import com.mindhub.homebanking.dtos.ClientDto;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,10 +16,8 @@ import static java.util.stream.Collectors.toList;
 @RequestMapping("/api")
 public class AccountController {
 
-    AccountRepository accountRepository;
-
     @Autowired
-    public AccountController(AccountRepository accountRepository){this.accountRepository = accountRepository;}
+    private AccountRepository accountRepository;
 
     @RequestMapping("/accounts")
         public List<AccountDto> getAccounts(){

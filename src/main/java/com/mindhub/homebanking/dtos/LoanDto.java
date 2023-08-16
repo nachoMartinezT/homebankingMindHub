@@ -2,7 +2,6 @@ package com.mindhub.homebanking.dtos;
 
 import com.mindhub.homebanking.models.Loan;
 
-import java.util.List;
 import java.util.Set;
 
 public class LoanDto {

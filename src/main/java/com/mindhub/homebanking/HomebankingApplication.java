@@ -10,8 +10,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @SpringBootApplication
@@ -22,7 +20,7 @@ public class HomebankingApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return (args) -> {
 			Client client3 = new Client("Nacho","Martinez","martineznacho@gmail.com");
 			Client client2 = new Client("Carla","Perez","carlaperez@hotmail.com");
@@ -97,8 +95,21 @@ public class HomebankingApplication {
 			TransactionDto transactionDto = new TransactionDto(transaction);
 			System.out.println(transactionDto);
 
-			/*Préstamo Hipotecario, 400.000, 60 cuotas.
-					Préstamo Personal, 50.000, 12 cuotas
+			Card debitGold = new Card( client1,CardType.DEBIT,CardColor.GOLD,"4123 8745 6321 7412",354,LocalDate.now().plusYears(5),LocalDate.now());
+			client1.addCard(debitGold);
+
+
+			Card creditCard =  new Card(client1,CardType.CREDIT,CardColor.TITANIUM,"4123 9214 3214 7856", 971, LocalDate.now().plusYears(7),LocalDate.now());
+			client1.addCard(creditCard);
+
+			cardRepository.save(creditCard);
+			cardRepository.save(debitGold);
+			clientRepository.save(client1);
+
+
+			/*Una tarjeta de débito GOLD para el cliente Melba, la fecha de inicio de validez es la fecha actual y la fecha de vencimiento 5 años desde la fecha actual, cardholder tendrá el nombre y apellido del cliente concatenado, los demás campos los puedes completar a tu elección, recuerda que el cvv tiene solo 3 dígitos.
+
+Una tarjeta de crédito Titanium para el cliente Melba con los mismos datos excepto número y cvv.
 */
 
 

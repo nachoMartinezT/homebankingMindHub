@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -102,7 +102,7 @@
                                         v-bind:class="[ transaction.type == 'CREDIT' ? 'credit-transaction' : 'debit-transaction' ]">
                                         <td>{{ index+1 }}</td>
                                         <td>{{ transaction.description }}</td>
-                                        <td>{{ formatDate(transaction.dateOfTransaction) }}</td>
+                                        <td>{{ formatDate(transaction.creationDate) }}</td>
                                         <td>{{ transaction.amount }}</td>
                                     </tr>
                                 </tbody>

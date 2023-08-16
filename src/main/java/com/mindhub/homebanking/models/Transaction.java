@@ -3,7 +3,6 @@ package com.mindhub.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,12 +11,13 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Account account;
     private TransactionType type;
     private double amount;
     private String description;
     private LocalDateTime dateOfTransaction;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Account account;
+
 
     public Transaction(){}
 

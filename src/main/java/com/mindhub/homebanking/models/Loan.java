@@ -3,9 +3,7 @@ package com.mindhub.homebanking.models;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,13 +13,13 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
     @GenericGenerator(name = "native",strategy = "native")
     private Long id;
-    private String name;
-    private double maxAmount;
     @ElementCollection
     private Set<Integer> payments = new HashSet<>();
-
     @OneToMany(mappedBy = "loan",fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
+    private String name;
+    private double maxAmount;
+
 
     public Loan() {
     }
