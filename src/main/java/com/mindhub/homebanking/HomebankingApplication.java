@@ -3,10 +3,12 @@ package com.mindhub.homebanking;
 import com.mindhub.homebanking.dtos.TransactionDto;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,12 +21,17 @@ public class HomebankingApplication {
         SpringApplication.run(HomebankingApplication.class, args);
     }
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
-            Client client3 = new Client("Nacho", "Martinez", "martineznacho@gmail.com");
-            Client client2 = new Client("Carla", "Perez", "carlaperez@hotmail.com");
-            Client client1 = new Client("Melba", "Morel", "melmo@gmail.com");
+            Client client3 = new Client("1234","admin", "admin", "admin@gmail.com");
+            Client client2 = new Client("1234","Carla", "Perez", "carlaperez@hotmail.com");
+            Client client1 = new Client(passwordEncoder.encode("1234"),"Melba", "Morel", "melmo@gmail.com");
+            client1.setRol(Rol.ADMIN);
             clientRepository.save(client1);
             clientRepository.save(client2);
             clientRepository.save(client3);

@@ -22,15 +22,18 @@ public class Client {
 
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
+    private String password;
     private String firstName;
     private String lastName;
     private String email;
+    private Rol rol;
 
 
     public Client() {
     }
 
-    public Client(String firstName, String lastName, String email) {
+    public Client(String password,String firstName, String lastName, String email) {
+        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -67,6 +70,22 @@ public class Client {
 
     public Set<Account> getAccounts() {
         return accounts;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Set<Loan> getLoans() {
