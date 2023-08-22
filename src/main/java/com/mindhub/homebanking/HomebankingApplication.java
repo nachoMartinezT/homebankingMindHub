@@ -28,21 +28,24 @@ public class HomebankingApplication {
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
-            Client client3 = new Client("1234","admin", "admin", "admin@gmail.com");
-            Client client2 = new Client("1234","Carla", "Perez", "carlaperez@hotmail.com");
+            Client client3 = new Client(passwordEncoder.encode("1234"),"admin", "admin", "admin@gmail.com");
+            Client client2 = new Client(passwordEncoder.encode("1234"),"Carla", "Perez", "carlaperez@hotmail.com");
             Client client1 = new Client(passwordEncoder.encode("1234"),"Melba", "Morel", "melmo@gmail.com");
             client1.setRol(Rol.ADMIN);
+            client3.setRol(Rol.ADMIN);
+            client2.setRol(Rol.CLIENT);
             clientRepository.save(client1);
             clientRepository.save(client2);
             clientRepository.save(client3);
-
+            System.out.println(Rol.ADMIN);
+            System.out.println(Rol.ADMIN.toString());
             Account account1 = new Account("VIN001", LocalDate.now(), 5000);
             Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
 
             Account account3 = new Account("VIN003", LocalDate.now(), 12000);
             Account account4 = new Account("VIN004", LocalDate.now(), 13500);
-            client2.addAccount(account3);
-            client3.addAccount(account4);
+            client2.addAccount(account1);
+            client3.addAccount(account2);
 
 
             client1.addAccount(account3);
@@ -74,6 +77,8 @@ public class HomebankingApplication {
             transactionRepository.save(transaction3);
             transactionRepository.save(transaction2);
 
+            clientRepository.save(client2);
+            clientRepository.save(client3);
 
             Loan hipotecario = new Loan("hipotecario", 500000, Set.of(12, 24, 36, 48, 60));
             Loan personal = new Loan("Personal", 100000, Set.of(6, 12, 24));

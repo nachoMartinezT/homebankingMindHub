@@ -22,20 +22,17 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                .antMatchers("/web/index.html","/web/css/**","/web/img/**","/web/js/**","/api/login").permitAll()
+                        .antMatchers("/web/**").permitAll()
+                        .antMatchers("/api/**").hasAuthority("ADMIN")
+                        .antMatchers("/web/accounts/**").hasAuthority("ADMIN")
+                        .antMatchers("/h2-console").hasAuthority("ADMIN")
+                        .antMatchers("/web/account/**").hasAuthority("CLIENT");
+
+                /*.antMatchers("/web/index.html","/web/css/**","/web/img/**","/web/js/**","/api/login").permitAll()
                 .antMatchers("/web/accounts").hasAuthority("CLIENT")
                 .antMatchers("/web/account").hasAuthority("CLIENT")
                 .antMatchers("/web/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN");
-
-
-
-
-
-
-
-
-
+                .antMatchers("/h2-console").hasAuthority("ADMIN");*/
 
         http.formLogin()
 
