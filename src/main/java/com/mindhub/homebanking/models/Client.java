@@ -26,17 +26,17 @@ public class Client {
     private String firstName;
     private String lastName;
     private String email;
-    private Rol rol;
+    private Role role;
 
 
     public Client() {
     }
 
-    public Client(String password,String firstName, String lastName, String email) {
-        this.password = password;
+    public Client(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     public Long getId() {
@@ -80,12 +80,12 @@ public class Client {
         this.password = password;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public Set<Loan> getLoans() {
@@ -111,6 +111,7 @@ public class Client {
     public void setCards(Set<Card> cards) {
         this.cards = cards;
     }
+
 
     public void addAccount(Account account) {
         account.setClient(this);

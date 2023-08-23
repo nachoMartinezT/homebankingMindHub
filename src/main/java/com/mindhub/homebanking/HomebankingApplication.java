@@ -28,17 +28,17 @@ public class HomebankingApplication {
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
-            Client client3 = new Client(passwordEncoder.encode("1234"),"admin", "admin", "admin@gmail.com");
-            Client client2 = new Client(passwordEncoder.encode("1234"),"Carla", "Perez", "carlaperez@hotmail.com");
-            Client client1 = new Client(passwordEncoder.encode("1234"),"Melba", "Morel", "melmo@gmail.com");
-            client1.setRol(Rol.ADMIN);
-            client3.setRol(Rol.ADMIN);
-            client2.setRol(Rol.CLIENT);
+            Client client3 = new Client("pepe","admin", "admin@gmail.com",passwordEncoder.encode("1234"));
+            Client client2 = new Client("Carla", "Perez", "carlaperez@hotmail.com",passwordEncoder.encode("1234"));
+            Client client1 = new Client("Melba", "Morel", "melmo@gmail.com",passwordEncoder.encode("1234"));
+            client1.setRole(Role.ADMIN);
+            client3.setRole(Role.ADMIN);
+            client2.setRole(Role.CLIENT);
             clientRepository.save(client1);
             clientRepository.save(client2);
             clientRepository.save(client3);
-            System.out.println(Rol.ADMIN);
-            System.out.println(Rol.ADMIN.toString());
+            System.out.println(Role.ADMIN);
+            System.out.println(Role.ADMIN.toString());
             Account account1 = new Account("VIN001", LocalDate.now(), 5000);
             Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
 

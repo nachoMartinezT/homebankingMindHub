@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
@@ -22,17 +21,11 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                        .antMatchers("/web/**").permitAll()
-                        .antMatchers("/api/**").hasAuthority("ADMIN")
-                        .antMatchers("/web/accounts/**").hasAuthority("ADMIN")
-                        .antMatchers("/h2-console").hasAuthority("ADMIN")
-                        .antMatchers("/web/account/**").hasAuthority("CLIENT");
-
-                /*.antMatchers("/web/index.html","/web/css/**","/web/img/**","/web/js/**","/api/login").permitAll()
-                .antMatchers("/web/accounts").hasAuthority("CLIENT")
-                .antMatchers("/web/account").hasAuthority("CLIENT")
+                .antMatchers("/web/index.html","/web/css/**","/web/img/**","/web/js/**","/api/login").permitAll()
+                .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
+                .antMatchers("/web/account.html").hasAuthority("CLIENT")
                 .antMatchers("/web/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN");*/
+                .antMatchers("/h2-console").hasAuthority("ADMIN");
 
         http.formLogin()
 
