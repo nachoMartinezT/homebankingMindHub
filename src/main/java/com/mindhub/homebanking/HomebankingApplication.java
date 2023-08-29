@@ -3,6 +3,7 @@ package com.mindhub.homebanking;
 import com.mindhub.homebanking.dtos.TransactionDto;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import com.mindhub.homebanking.utils.NumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -28,17 +29,17 @@ public class HomebankingApplication {
     @Bean
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
+
             Client client3 = new Client("pepe","admin", "admin@gmail.com",passwordEncoder.encode("1234"));
             Client client2 = new Client("Carla", "Perez", "carlaperez@hotmail.com",passwordEncoder.encode("1234"));
             Client client1 = new Client("Melba", "Morel", "melmo@gmail.com",passwordEncoder.encode("1234"));
             client1.setRole(Role.ADMIN);
-            client3.setRole(Role.ADMIN);
-            client2.setRole(Role.CLIENT);
+
+
             clientRepository.save(client1);
             clientRepository.save(client2);
             clientRepository.save(client3);
-            System.out.println(Role.ADMIN);
-            System.out.println(Role.ADMIN.toString());
+
             Account account1 = new Account("VIN001", LocalDate.now(), 5000);
             Account account2 = new Account("VIN002", LocalDate.now().plusDays(1), 7500);
 
@@ -103,15 +104,15 @@ public class HomebankingApplication {
 
             TransactionDto transactionDto = new TransactionDto(transaction);
 
-            Card debitGold = new Card(client1, CardType.DEBIT, CardColor.GOLD, "4123 8745 6321 7412", 354, LocalDate.now().plusYears(5), LocalDate.now());
+            /*Card debitGold = new Card(CardType.DEBIT, CardColor.GOLD);
             client1.addCard(debitGold);
 
 
-            Card creditCard = new Card(client1, CardType.CREDIT, CardColor.TITANIUM, "4123 9214 3214 7856", 971, LocalDate.now().plusYears(7), LocalDate.now());
-            client1.addCard(creditCard);
+            Card creditCard = new Card(CardType.CREDIT, CardColor.TITANIUM);
+            client1.addCard(creditCard);*/
 
-            cardRepository.save(creditCard);
-            cardRepository.save(debitGold);
+            /*cardRepository.save(creditCard);
+            cardRepository.save(debitGold);*/
             clientRepository.save(client1);
 
 

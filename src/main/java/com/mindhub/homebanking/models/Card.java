@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.models;
 
+import com.mindhub.homebanking.utils.NumberGenerator;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -25,15 +26,14 @@ public class Card {
     public Card() {
     }
 
-    public Card(Client client, CardType type, CardColor color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
-        this.client = client;
-        this.cardHolder = client.getFirstName() + " " + client.getLastName();
+    public Card(CardType type, CardColor color) {
+        this.cardHolder = this.setCardHolder();
         this.type = type;
         this.color = color;
-        this.number = number;
-        this.cvv = cvv;
-        this.thruDate = thruDate;
-        this.fromDate = fromDate;
+        this.number = NumberGenerator.cardNumberGenerator();
+        this.cvv = NumberGenerator.cvvNumberGenerator();
+        this.thruDate = LocalDate.now().plusYears(5);
+        this.fromDate = LocalDate.now();
     }
 
     public Long getId() {
@@ -84,8 +84,8 @@ public class Card {
         return cardHolder;
     }
 
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
+    public String setCardHolder() {
+        return this.cardHolder = client.getFirstName() + " " + client.getLastName();
     }
 
     public LocalDate getThruDate() {
@@ -103,4 +103,5 @@ public class Card {
     public void setFromDate(LocalDate fromDate) {
         this.fromDate = fromDate;
     }
+
 }
