@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,20 +34,30 @@ public class CardController {
     }
 
     @PostMapping("/clients/current/cards") //(path = "/clients/current/cards", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCard(Authentication authentication,@RequestParam String cardColor, @RequestParam String cardType){
+    public ResponseEntity<Object> createCard(Authentication authentication,@RequestParam String cardType, @RequestParam String cardColor) throws HttpClientErrorException.BadRequest {
         Client client = clientRepository.findByEmail(authentication.getName());
         CardType type = CardType.valueOf(cardType.toUpperCase());
-        CardColor color = CardColor.valueOf(cardType.toUpperCase());
-        String newCardNumber = "";
-        do{
-            newCardNumber = NumberGenerator.cardNumberGenerator();
-        } while(newCardNumber.equals(cardRepository.findByNumber(newCardNumber).getNumber()));
+        CardColor color = CardColor.valueOf(cardColor.toUpperCase());
+
 
         if (client.getCards().size() == 3){
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
         Card card = new Card(type, color);
+
+        String newCardNumber = "";
+        Card cardForNumber =  cardRepository.findByNumber(newCardNumber);
+        newCardNumber = NumberGenerator.cardNumberGenerator();
+        if (cardForNumber != null){
+            while(newCardNumber.equals(cardForNumber.getNumber())) {
+                    newCardNumber = NumberGenerator.cardNumberGenerator();
+            }
+            card.setNumber(newCardNumber);
+        } else {
+            card.setNumber(newCardNumber);
+        }
+
         card.setCardHolder(client.getFirstName() + " " + client.getLastName());
         card.setNumber(newCardNumber);
         card.setCvv(NumberGenerator.cvvNumberGenerator());
