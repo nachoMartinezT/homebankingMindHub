@@ -48,14 +48,25 @@ public class AccountController {
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount(Authentication authentication){
         Client client = clientRepository.findByEmail(authentication.getName());
+
+        if (client == null){
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
         if (client.getAccounts().size() < 3){
             Account account = new Account(LocalDate.now(), 0);
-            String newAccountNumber = "";
-            do{
-                newAccountNumber = NumberGenerator.accountNumberGenerator();
-            } while(newAccountNumber.equals(accountRepository.findByNumber(newAccountNumber).getNumber()));
-            account.setNumber(newAccountNumber);
-            System.out.println(account.getNumber());
+            String newAccountNumber = NumberGenerator.accountNumberGenerator();
+            Account accountForNumber = accountRepository.findByNumber(newAccountNumber);
+
+            if (accountForNumber == null){
+                account.setNumber(newAccountNumber);
+            } else {
+                while (accountRepository.findByNumber(newAccountNumber) != null){
+                    newAccountNumber = NumberGenerator.accountNumberGenerator();
+                }
+                account.setNumber(newAccountNumber);
+            }
+
             client.addAccount(account);
             clientRepository.save(client);
             accountRepository.save(account);
