@@ -23,8 +23,8 @@ public class CardDto {
     public CardDto(Card card) {
         this.id = card.getId();
         this.cardHolder = card.getCardHolder();
-        this.type = card.getType();
-        this.color = card.getColor();
+        this.type = card.getCardType();
+        this.color = card.getCardColor();
         this.number = card.getNumber();
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();

@@ -21,11 +21,12 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                .antMatchers("/web/index.html","/web/css/**","/web/img/**","/web/js/**","/api/login").permitAll()
-                .antMatchers("/web/accounts.html").hasAuthority("CLIENT")
-                .antMatchers("/web/account.html").hasAuthority("CLIENT")
-                .antMatchers("/web/**").hasAuthority("ADMIN")
-                .antMatchers("/h2-console").hasAuthority("ADMIN");
+                .antMatchers("/web/index.html","/web/css/**","/web/img/**","/web/js/**","/api/login","/api/clients","/web/accounts.html").permitAll()
+                .antMatchers("/api/clients/current","/api/clients/current/cards","/api/clients/current/accounts","/web/accounts.html","/web/cards.html", "/web/account.html").hasAuthority("CLIENT")
+                .antMatchers("/web/create-cards.html").hasAuthority("CLIENT")
+                .antMatchers("/web/**","/api/**","/h2-console/**").hasAuthority("ADMIN")
+
+                .anyRequest().denyAll();
 
         http.formLogin()
 
@@ -35,7 +36,7 @@ public class WebAuthorization {
 
                 .loginPage("/api/login");
 
-
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
         // turn off checking for CSRF tokens
 
         http.csrf().disable();

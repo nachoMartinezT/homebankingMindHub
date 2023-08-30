@@ -16,8 +16,8 @@ public class Card {
     private Client client;
 
     private String cardHolder;
-    private CardType type;
-    private CardColor color;
+    private CardType cardType;
+    private CardColor cardColor;
     private String number;
     private int cvv;
     private LocalDate thruDate;
@@ -26,14 +26,9 @@ public class Card {
     public Card() {
     }
 
-    public Card(CardType type, CardColor color) {
-        this.cardHolder = this.setCardHolder();
-        this.type = type;
-        this.color = color;
-        this.number = NumberGenerator.cardNumberGenerator();
-        this.cvv = NumberGenerator.cvvNumberGenerator();
-        this.thruDate = LocalDate.now().plusYears(5);
-        this.fromDate = LocalDate.now();
+    public Card(CardType cardType, CardColor cardColor) {
+        this.cardType = cardType;
+        this.cardColor = cardColor;
     }
 
     public Long getId() {
@@ -48,20 +43,20 @@ public class Card {
         this.client = client;
     }
 
-    public CardType getType() {
-        return type;
+    public CardType getCardType() {
+        return cardType;
     }
 
-    public void setType(CardType type) {
-        this.type = type;
+    public void setCardType(CardType cardType) {
+        this.cardType = cardType;
     }
 
-    public CardColor getColor() {
-        return color;
+    public CardColor getCardColor() {
+        return cardColor;
     }
 
-    public void setColor(CardColor color) {
-        this.color = color;
+    public void setCardColor(CardColor cardColor) {
+        this.cardColor = cardColor;
     }
 
     public String getNumber() {
@@ -84,8 +79,8 @@ public class Card {
         return cardHolder;
     }
 
-    public String setCardHolder() {
-        return this.cardHolder = client.getFirstName() + " " + client.getLastName();
+    public String setCardHolder(String nameAndLastName) {
+        return this.cardHolder = nameAndLastName;
     }
 
     public LocalDate getThruDate() {
