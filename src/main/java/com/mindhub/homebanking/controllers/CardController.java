@@ -34,14 +34,13 @@ public class CardController {
     }
 
     @PostMapping("/clients/current/cards") //(path = "/clients/current/cards", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCard(Authentication authentication,@RequestParam String cardType, @RequestParam String cardColor) throws HttpClientErrorException.BadRequest {
+    public ResponseEntity<Object> createCard(Authentication authentication,@RequestParam String cardType, @RequestParam String cardColor) {
         Client client = clientRepository.findByEmail(authentication.getName());
         CardType type = CardType.valueOf(cardType.toUpperCase());
         CardColor color = CardColor.valueOf(cardColor.toUpperCase());
 
-
-        if (client.getCards().size() == 3){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        if (client.getCards().size() <= 3){
+            return new ResponseEntity<>("The user cannot have more than three cards",HttpStatus.FORBIDDEN);
         }
 
         Card card = new Card(type, color);

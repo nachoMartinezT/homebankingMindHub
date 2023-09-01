@@ -53,7 +53,8 @@ public class AccountController {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 
-        if (client.getAccounts().size() < 3){
+        if (client.getAccounts().size() <= 3) {
+
             Account account = new Account(LocalDate.now(), 0);
             String newAccountNumber = NumberGenerator.accountNumberGenerator();
             Account accountForNumber = accountRepository.findByNumber(newAccountNumber);
