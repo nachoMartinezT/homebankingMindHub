@@ -21,9 +21,9 @@ public class WebAuthorization {
 
         http.authorizeRequests()
 
-                .antMatchers("/web/**","/api/login","/api/clients","/api/transactions").permitAll()
+                .antMatchers("/web/**","/api/login","/api/clients","/api/transactions","api/loans").permitAll()
                 .antMatchers("/api/clients/**").hasAuthority("CLIENT")
-                .antMatchers("/api/**","/h2-console/**").hasAuthority("ADMIN")
+                .antMatchers("/api/**","/h2-console/**").hasRole("ADMIN")
 
                 .anyRequest().denyAll();
 

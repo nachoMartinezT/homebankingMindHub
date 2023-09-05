@@ -18,7 +18,7 @@ public class Loan {
     @OneToMany(mappedBy = "loan", fetch = FetchType.EAGER)
     private Set<ClientLoan> clientLoans = new HashSet<>();
     private String name;
-    private double maxAmount;
+    private Double maxAmount;
 
 
     public Loan() {

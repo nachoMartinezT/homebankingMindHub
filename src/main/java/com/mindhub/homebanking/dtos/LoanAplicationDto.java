@@ -8,15 +8,14 @@ public class LoanAplicationDto {
 
     private Long id;
     private Double amount;
-    @ElementCollection
-    private Set<Integer> payments = new HashSet<>();
+    private int payments;
     private String account;
 
 
     public LoanAplicationDto() {
     }
 
-    public LoanAplicationDto(Long id, Double amount, Set<Integer> payments, String account) {
+    public LoanAplicationDto(Long id, Double amount, int payments, String account) {
         this.id = id;
         this.amount = amount;
         this.payments = payments;
@@ -31,7 +30,7 @@ public class LoanAplicationDto {
         return amount;
     }
 
-    public Set<Integer> getPayments() {
+    public int getPayments() {
         return payments;
     }
 
