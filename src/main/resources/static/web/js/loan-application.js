@@ -50,7 +50,7 @@ Vue.createApp({
             }
         },
         apply: function () {
-            axios.post("/api/loans", { loanId: this.loanTypeId, amount: this.amount, payments: this.payments, toAccountNumber: this.accountToNumber })
+            axios.post("/api/loans", { loanTypeId: this.loanTypeId, amount: this.amount, payments: this.payments, toAccountNumber: this.accountToNumber })
                 .then(response => {
                     this.modal.hide();
                     this.okmodal.show();

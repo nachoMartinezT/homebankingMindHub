@@ -7,6 +7,7 @@ import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.repositories.LoanRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,55 +24,16 @@ import java.util.stream.Collectors;
 public class LoanController {
 
     @Autowired
-    LoanRepository loanRepository;
-    @Autowired
-    ClientRepository clientRepository;
-    @Autowired
-    AccountRepository accountRepository;
-    @Autowired
-    TransactionRepository transactionRepository;
+    LoanService loanService;
 
     @GetMapping("/loans")
     public List<LoanDto> getLoans(){
-       return loanRepository.findAll().stream().map(LoanDto::new).collect(Collectors.toList());
+       return loanService.getLoans();
     }
 
     @Transactional
     @PostMapping("/loans")
     public ResponseEntity<Object> createLoan(@RequestBody LoanAplicationDto loanAplicationDto, Authentication authentication){
-
-
-        Client client = clientRepository.findByEmail(authentication.getName());
-
-        if (client == null){
-            return new ResponseEntity<>("Client not found", HttpStatus.FORBIDDEN);
-        }
-
-        if (accountRepository.findByNumber(loanAplicationDto.getAccount()) == null){
-            return new ResponseEntity<>("Account not found", HttpStatus.FORBIDDEN);
-        }
-
-        if (!client.getAccounts().contains(accountRepository.findByNumber(loanAplicationDto.getAccount()))){
-            return new ResponseEntity<>("The account does not belong to the client", HttpStatus.FORBIDDEN);
-        }
-
-        Loan loan = loanRepository.findById(loanAplicationDto.getId()).orElse(null);
-
-        if (loan == null || loanAplicationDto.getAmount() > loan.getMaxAmount()  || !loan.getPayments().contains(loanAplicationDto.getPayments())){
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
-        }
-
-        loan.setMaxAmount(loanAplicationDto.getAmount() * 1.20);
-
-
-        Transaction transaction = new Transaction(TransactionType.CREDIT,loan.getMaxAmount(),"Loan", LocalDateTime.now());
-        Account account = accountRepository.findByNumber(loanAplicationDto.getAccount());
-        transaction.setAccount(account);
-        account.setBalance(account.getBalance() + loan.getMaxAmount());
-        transactionRepository.save(transaction);
-        accountRepository.save(account);
-        loanRepository.save(loan);
-
-        return new ResponseEntity<>("Loan created successfully",HttpStatus.CREATED);
+        return loanService.createLoan(loanAplicationDto, authentication);
     }
 }

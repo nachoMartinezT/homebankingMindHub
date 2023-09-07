@@ -1,29 +1,25 @@
 package com.mindhub.homebanking.dtos;
 
-import javax.persistence.ElementCollection;
-import java.util.HashSet;
-import java.util.Set;
-
 public class LoanAplicationDto {
 
-    private Long id;
+    private Long loanTypeId;
     private Double amount;
     private int payments;
-    private String account;
+    private String toAccountNumber;
 
 
     public LoanAplicationDto() {
     }
 
-    public LoanAplicationDto(Long id, Double amount, int payments, String account) {
-        this.id = id;
+    public LoanAplicationDto(Long loanTypeId,Double amount,int payments, String toAccountNumber) {
+        this.loanTypeId = loanTypeId;
         this.amount = amount;
         this.payments = payments;
-        this.account = account;
+        this.toAccountNumber = toAccountNumber;
     }
 
-    public Long getId() {
-        return id;
+    public Long getLoanTypeId() {
+        return loanTypeId;
     }
 
     public Double getAmount() {
@@ -34,7 +30,17 @@ public class LoanAplicationDto {
         return payments;
     }
 
-    public String getAccount() {
-        return account;
+    public String getToAccountNumber() {
+        return toAccountNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "LoanAplicationDto{" +
+                "loanTypeId=" + loanTypeId +
+                ", amount=" + amount +
+                ", payments=" + payments +
+                ", accountToNumber='" + toAccountNumber + '\'' +
+                '}';
     }
 }
