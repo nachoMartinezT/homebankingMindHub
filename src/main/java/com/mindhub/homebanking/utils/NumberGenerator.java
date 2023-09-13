@@ -6,11 +6,11 @@ public class NumberGenerator {
     static Random random = new Random();
 
 
-    public static String accountNumberGenerator(){
-        return "VIN-" + String.format("%08d",random.nextInt(99999999) + 1) ;
+    public static String accountNumberGenerator() {
+        return "VIN" + String.format("%08d", random.nextInt(99999999) + 1);
     }
 
-    public static String cardNumberGenerator(){
+    public static String cardNumberGenerator() {
         String numbers = "";
 
         // Genera 16 números aleatorios
@@ -22,7 +22,7 @@ public class NumberGenerator {
         return numbers;
     }
 
-    public static int cvvNumberGenerator(){
+    public static int cvvNumberGenerator() {
         int number = random.nextInt(999) + 1;
         String formattedNumber = String.format("%03d", number);
         return Integer.parseInt(formattedNumber);

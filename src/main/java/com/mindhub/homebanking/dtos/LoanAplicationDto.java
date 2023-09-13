@@ -11,7 +11,7 @@ public class LoanAplicationDto {
     public LoanAplicationDto() {
     }
 
-    public LoanAplicationDto(Long loanTypeId,Double amount,int payments, String toAccountNumber) {
+    public LoanAplicationDto(Long loanTypeId, Double amount, int payments, String toAccountNumber) {
         this.loanTypeId = loanTypeId;
         this.amount = amount;
         this.payments = payments;

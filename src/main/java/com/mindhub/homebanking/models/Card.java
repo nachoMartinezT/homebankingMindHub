@@ -1,6 +1,5 @@
 package com.mindhub.homebanking.models;
 
-import com.mindhub.homebanking.utils.NumberGenerator;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

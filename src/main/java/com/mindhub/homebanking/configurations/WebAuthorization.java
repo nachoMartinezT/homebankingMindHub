@@ -17,20 +17,18 @@ import javax.servlet.http.HttpSession;
 public class WebAuthorization {
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
 
 
+                .antMatchers("/web/**", "/api/login").permitAll()
+                .antMatchers("/api/clients", "/api/transactions", "/api/loans", "/api/clients/current", "/api/clients/current/**").hasAuthority("CLIENT")
+                .antMatchers("/api/**", "/h2-console/**").hasAuthority("ADMIN")
+        ;
 
 
-                .antMatchers("/web/**","/api/login").permitAll()
-                .antMatchers("/api/clients","/api/transactions","/api/loans","/api/clients/current","/api/clients/current/**").hasAuthority("CLIENT")
-                .antMatchers("/api/**","/h2-console/**").hasAuthority("ADMIN")
-                ;
-
-
-            //    .anyRequest().denyAll();
+        //    .anyRequest().denyAll();
 
         http.formLogin()
 
@@ -71,8 +69,6 @@ public class WebAuthorization {
 
         return http.build();
     }
-
-
 
 
     private void clearAuthenticationAttributes(HttpServletRequest request) {

@@ -29,32 +29,32 @@ public class LoanServiceImpl implements LoanService {
     ClientLoanRepository clientLoanRepository;
 
 
-    public List<LoanDto> getLoans(){
+    public List<LoanDto> getLoans() {
         return loanRepository.findAll().stream().map(LoanDto::new).collect(Collectors.toList());
     }
 
-    public ResponseEntity<Object> createLoan(LoanAplicationDto loanAplicationDto, Authentication authentication){
+    public ResponseEntity<Object> createLoan(LoanAplicationDto loanAplicationDto, Authentication authentication) {
 
 
         Client client = clientRepository.findByEmail(authentication.getName());
 
-        if (client == null){
+        if (client == null) {
             return new ResponseEntity<>("Client not found", HttpStatus.FORBIDDEN);
         }
 
         Account account = accountRepository.findByNumber(loanAplicationDto.getToAccountNumber());
 
-        if (account == null){
+        if (account == null) {
             return new ResponseEntity<>("Account not found", HttpStatus.FORBIDDEN);
         }
 
-        if (!client.getAccounts().contains(accountRepository.findByNumber(loanAplicationDto.getToAccountNumber()))){
+        if (!client.getAccounts().contains(accountRepository.findByNumber(loanAplicationDto.getToAccountNumber()))) {
             return new ResponseEntity<>("The account does not belong to the client", HttpStatus.FORBIDDEN);
         }
 
         Loan loan = loanRepository.findById(loanAplicationDto.getLoanTypeId()).orElse(null);
 
-        if (loan == null || loanAplicationDto.getAmount() > loan.getMaxAmount()  || !loan.getPayments().contains(loanAplicationDto.getPayments())){
+        if (loan == null || loanAplicationDto.getAmount() > loan.getMaxAmount() || !loan.getPayments().contains(loanAplicationDto.getPayments())) {
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
         }
 
@@ -67,8 +67,7 @@ public class LoanServiceImpl implements LoanService {
         clientRepository.save(client);
 
 
-
-        Transaction transaction = new Transaction(TransactionType.CREDIT,loan.getMaxAmount(),"Loan", LocalDateTime.now());
+        Transaction transaction = new Transaction(TransactionType.CREDIT, loan.getMaxAmount(), "Loan", LocalDateTime.now());
 
         transaction.setAccount(account);
         account.setBalance(account.getBalance() + loanAplicationDto.getAmount());
@@ -76,6 +75,6 @@ public class LoanServiceImpl implements LoanService {
         accountRepository.save(account);
         loanRepository.save(loan);
 
-        return new ResponseEntity<>("Loan created successfully",HttpStatus.CREATED);
+        return new ResponseEntity<>("Loan created successfully", HttpStatus.CREATED);
     }
 }

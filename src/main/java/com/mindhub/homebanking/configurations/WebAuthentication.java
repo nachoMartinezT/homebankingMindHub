@@ -22,10 +22,10 @@ public class WebAuthentication extends GlobalAuthenticationConfigurerAdapter {
 
     @Override
     public void init(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(inputName-> {
+        auth.userDetailsService(inputName -> {
             Client client = clientRepository.findByEmail(inputName);
             if (client != null) {
-                if (client.getRole().equals(Role.ADMIN)){
+                if (client.getRole().equals(Role.ADMIN)) {
                     return new User(client.getEmail(), client.getPassword(),
                             AuthorityUtils.createAuthorityList(Role.ADMIN.toString()));
                 } else {

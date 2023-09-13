@@ -3,7 +3,6 @@ package com.mindhub.homebanking;
 import com.mindhub.homebanking.dtos.TransactionDto;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
-import com.mindhub.homebanking.utils.NumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -30,9 +29,9 @@ public class HomebankingApplication {
     public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
         return (args) -> {
 
-            Client client3 = new Client("pepe","admin", "admin@gmail.com",passwordEncoder.encode("1234"));
-            Client client2 = new Client("Carla", "Perez", "carlaperez@hotmail.com",passwordEncoder.encode("1234"));
-            Client client1 = new Client("Melba", "Morel", "melmo@gmail.com",passwordEncoder.encode("1234"));
+            Client client3 = new Client("pepe", "admin", "admin@gmail.com", passwordEncoder.encode("1234"));
+            Client client2 = new Client("Carla", "Perez", "carlaperez@hotmail.com", passwordEncoder.encode("1234"));
+            Client client1 = new Client("Melba", "Morel", "melmo@gmail.com", passwordEncoder.encode("1234"));
             client1.setRole(Role.ADMIN);
 
 

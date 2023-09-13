@@ -8,8 +8,6 @@ import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.utils.NumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -42,35 +40,29 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public ResponseEntity<Object> createAccount(Authentication authentication) {
+    public void createAccount(Authentication authentication) {
         Client client = clientRepository.findByEmail(authentication.getName());
 
-        if (client == null){
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
+        Account account = new Account(LocalDate.now(), 0);
+        String newAccountNumber = NumberGenerator.accountNumberGenerator();
+        Account accountForNumber = accountRepository.findByNumber(newAccountNumber);
 
-        if (client.getAccounts().size() <= 3) {
-
-            Account account = new Account(LocalDate.now(), 0);
-            String newAccountNumber = NumberGenerator.accountNumberGenerator();
-            Account accountForNumber = accountRepository.findByNumber(newAccountNumber);
-
-            if (accountForNumber == null){
-                account.setNumber(newAccountNumber);
-            } else {
-                while (accountRepository.findByNumber(newAccountNumber) != null){
-                    newAccountNumber = NumberGenerator.accountNumberGenerator();
-                }
-                account.setNumber(newAccountNumber);
+        if (accountForNumber == null) {
+            account.setNumber(newAccountNumber);
+        } else {
+            while (accountRepository.findByNumber(newAccountNumber) != null) {
+                newAccountNumber = NumberGenerator.accountNumberGenerator();
             }
-
-            client.addAccount(account);
-            clientRepository.save(client);
-            accountRepository.save(account);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            account.setNumber(newAccountNumber);
         }
-        return new ResponseEntity<>("The customer cannot have more than 3 accounts.",HttpStatus.FORBIDDEN);
+
+        client.addAccount(account);
+        clientRepository.save(client);
+        accountRepository.save(account);
+
     }
+
 }
+
 
 
