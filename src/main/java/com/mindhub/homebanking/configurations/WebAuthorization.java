@@ -23,12 +23,11 @@ public class WebAuthorization {
 
 
                 .antMatchers("/web/**", "/api/login").permitAll()
-                .antMatchers("/api/clients", "/api/transactions", "/api/loans", "/api/clients/current", "/api/clients/current/**").hasAuthority("CLIENT")
+                .antMatchers("/api/clients", "/api/transactions", "/api/loans", "/api/clients/current",
+                        "/api/clients/current/accounts","/api/clients/current/cards","/api/transaction",
+                        "/api/transactions/**").hasAnyAuthority("ADMIN","CLIENT")
                 .antMatchers("/api/**", "/h2-console/**").hasAuthority("ADMIN")
-        ;
-
-
-        //    .anyRequest().denyAll();
+                .anyRequest().denyAll();
 
         http.formLogin()
 
